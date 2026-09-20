@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { authApi, type UserRole } from '../api/client'
+import { authApi, normalizeRole, type UserRole } from '../api/client'
 import { useAuth } from '../context/AuthContext'
 import { UserPlus, Mail, KeyRound, User, AlertCircle, CheckCircle2 } from 'lucide-react'
 
@@ -8,7 +8,7 @@ export const RegisterForm: React.FC<{ onSuccess?: () => void }> = ({ onSuccess }
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [fullName, setFullName] = useState('')
-  const [role, setRole] = useState<UserRole>('PATIENT')
+  const [role, setRole] = useState<UserRole>('Patient')
   const [error, setError] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -105,14 +105,14 @@ export const RegisterForm: React.FC<{ onSuccess?: () => void }> = ({ onSuccess }
           <label className="block text-xs font-medium text-slate-300 mb-1">Account Role</label>
           <select
             value={role}
-            onChange={(e) => setRole(e.target.value as UserRole)}
+            onChange={(e) => setRole(normalizeRole(e.target.value))}
             className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-teal-500 transition-colors"
           >
-            <option value="PATIENT">Patient</option>
-            <option value="DOCTOR">Doctor / Provider</option>
-            <option value="LAB">Lab Technician</option>
-            <option value="FACILITY_ADMIN">Facility Administrator</option>
-            <option value="SYSTEM_ADMIN">System Administrator</option>
+            <option value="Patient">Patient (PATIENT)</option>
+            <option value="Doctor">Doctor / Provider (DOCTOR)</option>
+            <option value="Lab">Lab Technician (LAB)</option>
+            <option value="FacilityAdmin">Facility Administrator (FACILITY_ADMIN)</option>
+            <option value="SystemAdmin">System Administrator (SYSTEM_ADMIN)</option>
           </select>
         </div>
 

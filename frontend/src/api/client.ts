@@ -39,7 +39,47 @@ apiClient.interceptors.response.use(
 
 // ── Types ─────────────────────────────────────────────────────────
 
-export type UserRole = 'PATIENT' | 'DOCTOR' | 'LAB' | 'FACILITY_ADMIN' | 'SYSTEM_ADMIN'
+export type UserRole = 'Patient' | 'Doctor' | 'Lab' | 'FacilityAdmin' | 'SystemAdmin'
+
+export const ROLE_MAP: Record<string, UserRole> = {
+  PATIENT: 'Patient',
+  DOCTOR: 'Doctor',
+  LAB: 'Lab',
+  FACILITY_ADMIN: 'FacilityAdmin',
+  SYSTEM_ADMIN: 'SystemAdmin',
+  Patient: 'Patient',
+  Doctor: 'Doctor',
+  Lab: 'Lab',
+  FacilityAdmin: 'FacilityAdmin',
+  SystemAdmin: 'SystemAdmin',
+}
+
+export const normalizeRole = (role: string | UserRole): UserRole => {
+  return ROLE_MAP[role] || (role as UserRole)
+}
+
+export const formatRoleDisplay = (role?: string | UserRole): string => {
+  if (!role) return ''
+  switch (role) {
+    case 'Patient':
+    case 'PATIENT':
+      return 'PATIENT'
+    case 'Doctor':
+    case 'DOCTOR':
+      return 'DOCTOR'
+    case 'Lab':
+    case 'LAB':
+      return 'LAB'
+    case 'FacilityAdmin':
+    case 'FACILITY_ADMIN':
+      return 'FACILITY_ADMIN'
+    case 'SystemAdmin':
+    case 'SYSTEM_ADMIN':
+      return 'SYSTEM_ADMIN'
+    default:
+      return role
+  }
+}
 
 export interface UserMe {
   id: string
@@ -126,8 +166,10 @@ export const authApi = {
   login: (credentials: { email: string; password: string }) =>
     apiClient.post<AuthResponse>('/auth/login', credentials).then((r) => r.data),
   
-  register: (payload: { email: string; password: string; full_name: string; role: UserRole }) =>
-    apiClient.post<AuthResponse>('/auth/register', payload).then((r) => r.data),
+  register: (payload: { email: string; password: string; full_name: string; role: UserRole | string }) => {
+    const role = normalizeRole(payload.role)
+    return apiClient.post<AuthResponse>('/auth/register', { ...payload, role }).then((r) => r.data)
+  },
   
   getMe: () =>
     apiClient.get<UserMe>('/auth/me').then((r) => r.data),

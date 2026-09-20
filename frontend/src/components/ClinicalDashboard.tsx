@@ -225,7 +225,7 @@ export function ClinicalDashboard({ patient }: Props) {
     })
   }
 
-  const isDoctor = user?.role === 'DOCTOR' || user?.role === 'SYSTEM_ADMIN'
+  const isDoctor = user?.role === 'Doctor' || user?.role === 'SystemAdmin'
 
   return (
     <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-6">

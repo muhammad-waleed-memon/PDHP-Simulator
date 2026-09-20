@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { healthApi, patientsApi, type PatientRecord, type ReadinessResponse } from './api/client'
+import { healthApi, patientsApi, formatRoleDisplay, type PatientRecord, type ReadinessResponse } from './api/client'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import { LoginForm } from './components/LoginForm'
 import { RegisterForm } from './components/RegisterForm'
@@ -97,7 +97,7 @@ function DashboardContent() {
               <div className="flex items-center space-x-3">
                 <div className="text-right hidden md:block">
                   <div className="text-xs font-semibold text-slate-200">{user.full_name}</div>
-                  <div className="text-[10px] text-emerald-400 font-mono tracking-wider">{user.role}</div>
+                  <div className="text-[10px] text-emerald-400 font-mono tracking-wider">{formatRoleDisplay(user.role)}</div>
                 </div>
                 <button
                   onClick={logout}
@@ -204,7 +204,7 @@ function DashboardContent() {
 
               <div className="flex items-center space-x-3">
                 <div className="px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 rounded-xl text-xs font-mono font-bold">
-                  ROLE: {user.role}
+                  ROLE: {formatRoleDisplay(user.role)}
                 </div>
 
                 <button
