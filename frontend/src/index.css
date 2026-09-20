@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  * {
+    box-sizing: border-box;
+    border-color: theme('colors.surface-3');
+  }
+
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  body {
+    @apply bg-surface text-slate-100 antialiased;
+    background-image: 
+      radial-gradient(at 20% 20%, rgba(20, 184, 166, 0.08) 0px, transparent 50%),
+      radial-gradient(at 80% 80%, rgba(34, 197, 94, 0.06) 0px, transparent 50%);
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-surface-2;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-surface-3 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-slate-500;
+  }
+}
+
+@layer components {
+  /* Card */
+  .card {
+    @apply bg-surface-2 border border-surface-3 rounded-2xl shadow-card;
+  }
+
+  /* Glassmorphism card */
+  .card-glass {
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    @apply border border-white/10 rounded-2xl shadow-card;
+  }
+
+  /* Primary button */
+  .btn-primary {
+    @apply bg-primary-600 hover:bg-primary-500 active:bg-primary-700
+           text-white font-medium px-4 py-2 rounded-xl
+           transition-all duration-200 ease-in-out
+           focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-surface
+           disabled:opacity-50 disabled:cursor-not-allowed
+           shadow-sm hover:shadow-glow-primary;
+  }
+
+  /* Secondary button */
+  .btn-secondary {
+    @apply bg-surface-3 hover:bg-slate-600 active:bg-slate-700
+           text-slate-100 font-medium px-4 py-2 rounded-xl
+           transition-all duration-200 ease-in-out
+           focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2 focus:ring-offset-surface;
+  }
+
+  /* Danger button */
+  .btn-danger {
+    @apply bg-danger-600 hover:bg-danger-500 active:bg-danger-700
+           text-white font-medium px-4 py-2 rounded-xl
+           transition-all duration-200 ease-in-out
+           focus:outline-none focus:ring-2 focus:ring-danger-500 focus:ring-offset-2 focus:ring-offset-surface;
+  }
+
+  /* Form input */
+  .input {
+    @apply bg-surface-3 border border-surface-3 rounded-xl px-4 py-2.5
+           text-slate-100 placeholder-slate-400 w-full
+           focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent
+           transition-all duration-200;
+  }
+
+  /* Badge */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-green {
+    @apply badge bg-primary-900/50 text-primary-400 border border-primary-800/50;
+  }
+  .badge-red {
+    @apply badge bg-danger-900/50 text-danger-400 border border-danger-800/50;
+  }
+  .badge-yellow {
+    @apply badge bg-accent-900/50 text-accent-400 border border-accent-800/50;
+  }
+  .badge-blue {
+    @apply badge bg-blue-900/50 text-blue-400 border border-blue-800/50;
+  }
+  .badge-gray {
+    @apply badge bg-surface-3 text-slate-400 border border-surface-3;
+  }
+
+  /* Status dot */
+  .status-dot {
+    @apply inline-block w-2 h-2 rounded-full;
+  }
+}
+
+@layer utilities {
+  .text-gradient-primary {
+    @apply bg-gradient-to-r from-primary-400 to-secondary-400 bg-clip-text text-transparent;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
